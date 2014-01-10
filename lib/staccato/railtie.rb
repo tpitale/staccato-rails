@@ -1,10 +1,6 @@
-require 'staccato/session_tracking'
-require 'staccato/subscribers/page'
-require 'staccato/subscribers/timing'
-
 module Staccato
   class Railtie < Rails::Railtie
-    before_configuration do |app|
+    config.before_configuration do |app|
       app.config.staccato = ActiveSupport::OrderedOptions.new
     end
 
