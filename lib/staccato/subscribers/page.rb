@@ -5,6 +5,10 @@ module Staccato
         new(args).track!
       end
 
+      def initialize(args)
+        @args = args
+      end
+
       def get?
         payload[:method] == "GET"
       end

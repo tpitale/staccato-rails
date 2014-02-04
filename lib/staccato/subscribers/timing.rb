@@ -22,9 +22,9 @@ module Staccato
       end
 
       def track!
-        tracker.timing(category: :runtime, variable: :total, time: total_runtime)
-        tracker.timing(category: :runtime, variable: :db, time: db_runtime)
-        tracker.timing(category: :runtime, variable: :view, time: view_runtime)
+        tracker.timing(category: :rails, variable: :runtime, label: :total, time: total_runtime)
+        tracker.timing(category: :rails, variable: :runtime, label: :db, time: db_runtime)
+        tracker.timing(category: :rails, variable: :runtime, label: :view, time: view_runtime)
       end
 
       private
