@@ -1,7 +1,9 @@
 # Staccato::Rails
 
-Provides seamless integration with basic tracking of rails (timing and pageviews)
-into the Google Analytics Measurement API.
+Provides seamless integration with basic tracking of rails (timing and pageviews) into the Google Analytics Measurement API.
+
+[![Build Status](https://travis-ci.org/tpitale/staccato-rails.png?branch=master)](https://travis-ci.org/tpitale/staccato-rails)
+[![Code Climate](https://codeclimate.com/github/tpitale/staccato-rails.png)](https://codeclimate.com/github/tpitale/staccato-rails)
 
 ## Installation
 
