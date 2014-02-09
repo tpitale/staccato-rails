@@ -2,6 +2,10 @@ module Staccato
   class Railtie < Rails::Railtie
     config.before_configuration do |app|
       app.config.staccato = ActiveSupport::OrderedOptions.new
+
+      # set defaults
+      app.config.staccato.timing = true
+      app.config.staccato.pageviews = true
     end
 
     initializer "staccato.controller_extension" do
@@ -11,8 +15,13 @@ module Staccato
     end
 
     initializer "staccato.configure_subscribers" do
-      ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Page)
-      ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Timing)
+      if config.staccato.timing
+        ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Timing)
+      end
+
+      if config.staccato.pageviews
+        ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Page)
+      end
     end
   end
 end
