@@ -39,11 +39,11 @@ In controllers, `tracker` is made available to you:
 
     tracker.event(category: 'video', action: 'play', label: 'cars', value: 1)
 
-## Disable some, or all, tracking (TODO)
+## Disable some, or all, tracking
 
     config.staccato.timing = false
     config.staccato.pageviews = false
-    config.staccato.exceptions = false
+    # config.staccato.exceptions = false # TODO
 
 ## Setting a pageview prefix (TODO)
 
