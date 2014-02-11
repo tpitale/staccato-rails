@@ -45,7 +45,7 @@ In controllers, `tracker` is made available to you:
     config.staccato.pageviews = false
     # config.staccato.exceptions = false # TODO
 
-## Setting a pageview prefix (TODO)
+## Setting a pageview prefix
 
     config.staccato.pageview_prefix = '/staccato'
 

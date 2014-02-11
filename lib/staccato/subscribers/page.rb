@@ -14,7 +14,7 @@ module Staccato
       end
 
       def path
-        payload[:path]
+        path_prefix + payload[:path]
       end
 
       def hostname
@@ -37,6 +37,10 @@ module Staccato
 
       def tracker
         @tracker ||= payload['staccato.tracker']
+      end
+
+      def path_prefix
+        Rails.application.config.staccato.pageview_prefix.to_s
       end
     end
   end

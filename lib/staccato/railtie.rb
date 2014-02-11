@@ -6,6 +6,7 @@ module Staccato
       # set defaults
       app.config.staccato.timing = true
       app.config.staccato.pageviews = true
+      app.config.staccato.pageview_prefix = ""
     end
 
     initializer "staccato.controller_extension" do
