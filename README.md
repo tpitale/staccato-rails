@@ -55,8 +55,6 @@ Tracking exceptions happens by adding to `ActionController::Base` a `rescue_from
     config.staccato.pageviews = false
     config.staccato.exceptions = false # default
 
-Staccato will 
-
 ## Contributing
 
 1. Fork it
