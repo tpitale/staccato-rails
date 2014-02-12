@@ -24,7 +24,7 @@ Or install it yourself as:
 * Timing from instrumentation (total duration, db_runtime, view_runtime)
 * Pageview tracking on GETs
 * Event tracking hooks in controllers, models that use the request session client id
-* TODO: Exception tracking (exception name, fatal if 500 error)
+* Exception tracking (tracks only the exception name)
 
 Session UUID for the client_id is handled for you. Can be overridden easily.
 
@@ -39,15 +39,21 @@ In controllers, `tracker` is made available to you:
 
     tracker.event(category: 'video', action: 'play', label: 'cars', value: 1)
 
+## Setting a pageview prefix
+
+    config.staccato.pageview_prefix = '/staccato'
+
+## Tracking exceptions ##
+
+    config.staccato.exceptions = true
+
+Tracking exceptions happens by adding to `ActionController::Base` a `rescue_from` for Exception. Because of this, it will only rescue exceptions that have not already been rescued from in your own code. If you wish to track those exceptions, as well, you can call `track_exception_with_staccato(exception)` to your own `rescue_from` methods.
+
 ## Disable some, or all, tracking
 
     config.staccato.timing = false
     config.staccato.pageviews = false
-    # config.staccato.exceptions = false # TODO
-
-## Setting a pageview prefix
-
-    config.staccato.pageview_prefix = '/staccato'
+    config.staccato.exceptions = false # default
 
 ## Contributing
 

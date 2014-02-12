@@ -5,4 +5,5 @@ Dummy::Application.configure do
   # Staccato configuration
   config.staccato.tracker_id = 'UA-1234-5'
   config.staccato.hostname = 'domain.com' # optional, but recommended
+  config.staccato.exceptions = true
 end

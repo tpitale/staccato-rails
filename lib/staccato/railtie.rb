@@ -7,11 +7,16 @@ module Staccato
       app.config.staccato.timing = true
       app.config.staccato.pageviews = true
       app.config.staccato.pageview_prefix = ""
+      app.config.staccato.exceptions = false
     end
 
     initializer "staccato.controller_extension" do
+      track_exceptions = config.staccato.exceptions
+
       ActiveSupport.on_load(:action_controller) do
         include Staccato::SessionTracking
+
+        include Staccato::ExceptionTracking if track_exceptions
       end
     end
 

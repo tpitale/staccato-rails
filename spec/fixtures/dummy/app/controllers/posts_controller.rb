@@ -4,4 +4,8 @@ class PostsController < ApplicationController
 
   def create
   end
+
+  def destroy
+    raise NotImplementedError
+  end
 end
