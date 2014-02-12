@@ -26,34 +26,46 @@ Or install it yourself as:
 * Event tracking hooks in controllers, models that use the request session client id
 * Exception tracking (tracks only the exception name)
 
-Session UUID for the client_id is handled for you. Can be overridden easily.
+Session UUID for the `client_id` is handled for you. Can be overridden easily.
 
 ## Usage
 
 In environments/production.rb (leave blank in development/test to not track):
 
-    config.staccato.tracker_id = 'UA-XXXX-Y'
-    config.staccato.hostname = 'domain.com' # optional, but recommended
+```ruby
+config.staccato.tracker_id = 'UA-XXXX-Y'
+config.staccato.hostname = 'domain.com' # optional, but recommended
+```
 
 In controllers, `tracker` is made available to you:
 
-    tracker.event(category: 'video', action: 'play', label: 'cars', value: 1)
+```ruby
+tracker.event(category: 'video', action: 'play', label: 'cars', value: 1)
+```
 
 ## Setting a pageview prefix
 
-    config.staccato.pageview_prefix = '/staccato'
+```ruby
+config.staccato.pageview_prefix = '/staccato'
+```
 
 ## Tracking exceptions ##
 
-    config.staccato.exceptions = true
+```ruby
+config.staccato.exceptions = true
+```
 
 Tracking exceptions happens by adding to `ActionController::Base` a `rescue_from` for Exception. Because of this, it will only rescue exceptions that have not already been rescued from in your own code. If you wish to track those exceptions, as well, you can call `track_exception_with_staccato(exception)` to your own `rescue_from` methods.
 
 ## Disable some, or all, tracking
 
-    config.staccato.timing = false
-    config.staccato.pageviews = false
-    config.staccato.exceptions = false # default
+Inside of your `environment` files, as appropriate
+
+```ruby
+config.staccato.timing = false
+config.staccato.pageviews = false
+config.staccato.exceptions = false # default
+```
 
 ## Contributing
 
