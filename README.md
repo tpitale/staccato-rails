@@ -26,7 +26,7 @@ Or install it yourself as:
 * Event tracking hooks in controllers, models that use the request session client id
 * Exception tracking (tracks only the exception name)
 
-Session UUID for the `client_id` is handled for you. Can be overridden easily.
+Session UUID for the `client_id` is handled for you. Can be overridden easily, see .
 
 ## Usage
 
@@ -43,7 +43,17 @@ In controllers, `tracker` is made available to you:
 tracker.event(category: 'video', action: 'play', label: 'cars', value: 1)
 ```
 
-## Setting a pageview prefix
+## Overriding the client_id ##
+
+A method is added to your controller called `staccato_client_id`. By default, it's implementation looks like:
+
+```ruby
+session['staccato.client_id'] ||= Staccato.build_client_id
+```
+
+If you wish to not store the `client_id` in session, or you wish to use another UUID value, you may override the method `staccato_client_id` as you see fit. Make sure that the `client_id` you generate fits with Google Analytics requirements. It _must_ remain the same `client_id` for an individual user's "session" (by GA standards) if you wish to track a user as they move through your application.
+
+## Setting a pageview prefix ##
 
 ```ruby
 config.staccato.pageview_prefix = '/staccato'
