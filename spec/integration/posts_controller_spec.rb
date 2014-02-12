@@ -26,4 +26,30 @@ describe PostsController do
       expect(payload["staccato.tracker"]).to eq(controller.tracker)
     end
   end
+
+  describe "tracking exceptions" do
+    let(:tracker) {stub(:exception)}
+
+    before(:each) do
+      controller.stubs(:tracker).returns(tracker)
+    end
+
+    it 'still raises the error' do
+      expect { controller.destroy }.to raise_exception(NotImplementedError)
+    end
+
+    it 'tracks the error' do
+      controller.track_exception_with_staccato(NotImplementedError.new)
+
+      expect(tracker).to have_received(:exception).with(description: 'NotImplementedError')
+    end
+
+    it 'tracks the error and raises' do
+      expect { 
+        controller.track_exception_with_staccato_and_raise(NotImplementedError.new)
+      }.to raise_exception(NotImplementedError)
+
+      expect(tracker).to have_received(:exception).with(description: 'NotImplementedError')
+    end
+  end
 end
