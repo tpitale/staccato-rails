@@ -26,16 +26,22 @@ Or install it yourself as:
 * Event tracking hooks in controllers, models that use the request session client id
 * Exception tracking (tracks only the exception name)
 
-Session UUID for the `client_id` is handled for you. Can be overridden easily, see .
+Session UUID for the `client_id` is handled for you. Can be overridden easily, see [Overriding the client_id](#overriding-the-client_id).
 
-## Usage
+## Usage ##
 
-In environments/production.rb (leave blank in development/test to not track):
+### Configuration ###
+
+In **environments/production.rb** (leave blank in development/test to not track):
 
 ```ruby
 config.staccato.tracker_id = 'UA-XXXX-Y'
 config.staccato.hostname = 'domain.com' # optional, but recommended
 ```
+
+**Note:** Because this is a Rails-specific gem, we leverage Rails' method of configuration. As such configuration should be placed in the appropriate environment file, specifically `production.rb`. It is _ill-advised_ to configure in Development or Test environments as that may cause false tracking during local work.
+
+### Tracking ###
 
 In controllers, `tracker` is made available to you:
 
