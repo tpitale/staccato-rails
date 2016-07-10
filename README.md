@@ -9,7 +9,7 @@ Provides seamless integration with basic tracking of rails (timing and pageviews
 
 Add this line to your application's Gemfile:
 
-    gem 'staccato-rails', github: "tpitale/staccato-rails", branch: "master"
+    gem 'staccato-rails'
 
 And then execute:
 
