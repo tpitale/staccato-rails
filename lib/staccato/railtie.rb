@@ -21,12 +21,14 @@ module Staccato
     end
 
     initializer "staccato.configure_subscribers" do
-      if config.staccato.timing
-        ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Timing)
-      end
+      config.after_initialize do
+        if config.staccato.timing
+          ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Timing)
+        end
 
-      if config.staccato.pageviews
-        ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Page)
+        if config.staccato.pageviews
+          ActiveSupport::Notifications.subscribe('process_action.action_controller', Staccato::Subscribers::Page)
+        end
       end
     end
   end
