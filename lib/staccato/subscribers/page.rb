@@ -23,7 +23,7 @@ module Staccato
 
       def track!
         return unless get?
-        tracker.pageview(path: path, hostname: hostname)
+        tracker.pageview(context.merge(path: path, hostname: hostname))
       end
 
       private
@@ -37,6 +37,10 @@ module Staccato
 
       def tracker
         @tracker ||= payload['staccato.tracker']
+      end
+
+      def context
+        @context ||= payload['staccato.context']
       end
 
       def path_prefix

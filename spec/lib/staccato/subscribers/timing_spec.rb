@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Staccato::Subscribers::Timing do
 
   let(:tracker) { Staccato.tracker(nil) }
+  let(:context) { {user_ip: "127.0.0.1"} }
   let(:now) {Time.now.to_i}
   let(:duration) {49} # in seconds
 
@@ -19,7 +20,8 @@ describe Staccato::Subscribers::Timing do
       status: 200,
       view_runtime: 46.848, # milliseconds
       db_runtime: 0.157, # milliseconds
-      'staccato.tracker' => tracker
+      'staccato.tracker' => tracker,
+      'staccato.context' => context
     }
   }
 
@@ -43,14 +45,14 @@ describe Staccato::Subscribers::Timing do
   it 'tracks total run time' do
     # convert duration time to milliseconds
     total_runtime = duration.to_f*1000
-    expect(tracker).to have_received(:timing).with(category: :rails, variable: :runtime, label: :total, time: total_runtime)
+    expect(tracker).to have_received(:timing).with(user_ip: "127.0.0.1", category: :rails, variable: :runtime, label: :total, time: total_runtime)
   end
 
   it 'tracks db run time' do
-    expect(tracker).to have_received(:timing).with(category: :rails, variable: :runtime, label: :db, time: 0.157)
+    expect(tracker).to have_received(:timing).with(user_ip: "127.0.0.1", category: :rails, variable: :runtime, label: :db, time: 0.157)
   end
 
   it 'tracks view rendering run time' do
-    expect(tracker).to have_received(:timing).with(category: :rails, variable: :runtime, label: :view, time: 46.848)
+    expect(tracker).to have_received(:timing).with(user_ip: "127.0.0.1", category: :rails, variable: :runtime, label: :view, time: 46.848)
   end
 end
