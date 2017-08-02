@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Staccato::Subscribers::Page do
 
   let(:tracker) { Staccato.tracker(nil) }
+  let(:context) { {} }
   let(:now) {Time.now.to_i}
   let(:duration) {49}
 
@@ -18,7 +19,8 @@ describe Staccato::Subscribers::Page do
       status: 200,
       view_runtime: 46.848,
       db_runtime: 0.157,
-      'staccato.tracker' => tracker
+      'staccato.tracker' => tracker,
+      'staccato.context' => context
     }
   }
 

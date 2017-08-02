@@ -1,7 +1,21 @@
 module Staccato
   module SessionTracking
-    def tracker
-      @tracker ||= Staccato.tracker(staccato_tracker_id, staccato_client_id)
+    def self.included(controller)
+      controller.class_eval do
+        alias_method :tracker, :staccato_tracker unless defined?(tracker)
+      end
+    end
+
+    def global_context
+      {}
+    end
+
+    def hit_context
+      {}
+    end
+
+    def staccato_tracker
+      @staccato_tracker ||= Staccato.tracker(staccato_tracker_id, staccato_client_id, global_context)
     end
 
     # pull tracker id from config
@@ -14,10 +28,13 @@ module Staccato
       session['staccato.client_id'] ||= Staccato.build_client_id
     end
 
+    # This is called in an `ensure` block by actionpack
+    #   errors raised here _may_ be particularly dangerous
     def append_info_to_payload(payload)
       super
 
-      payload["staccato.tracker"] = tracker
+      payload["staccato.tracker"] = staccato_tracker
+      payload["staccato.context"] = hit_context
     end
   end
 end

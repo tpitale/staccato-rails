@@ -49,6 +49,8 @@ In controllers, `tracker` is made available to you:
 tracker.event(category: 'video', action: 'play', label: 'cars', value: 1)
 ```
 
+Note: if you have an existing method named `tracker`, this is also available with the more verbose `staccato_tracker`.
+
 ## Overriding the client_id ##
 
 A method is added to your controller called `staccato_client_id`. By default, it's implementation looks like:
@@ -82,6 +84,30 @@ config.staccato.timing = false
 config.staccato.pageviews = false
 config.staccato.exceptions = false # default
 ```
+
+## Adding Global and Hit context ##
+
+To add values like `user_ip` to all hits called by `tracker` (in both your own code, and staccato-rails) create a method `global_context` in your controller and return a hash:
+
+```ruby
+def global_context
+  {
+    user_ip: request.remote_ip
+  }
+end
+```
+
+To add values only to the hits sent by staccato-rails (but not your own use of `tracker`) for pageviews and timing create a method `hit_context` in your controller and return a hash:
+
+```ruby
+def hit_context
+  {
+    user_agent: "cURL"
+  }
+end
+```
+
+If per-action control over the hits sent to GA is required you're better off just using `Staccato` directly at this point.
 
 ## Contributing
 

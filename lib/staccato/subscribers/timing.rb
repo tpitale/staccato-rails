@@ -21,10 +21,20 @@ module Staccato
         @view_runtime ||= payload[:view_runtime]
       end
 
+      def times
+        [
+          {label: :total, time: total_runtime},
+          {label: :db, time: db_runtime},
+          {label: :view, time: view_runtime}
+        ]
+      end
+
       def track!
-        tracker.timing(category: :rails, variable: :runtime, label: :total, time: total_runtime)
-        tracker.timing(category: :rails, variable: :runtime, label: :db, time: db_runtime)
-        tracker.timing(category: :rails, variable: :runtime, label: :view, time: view_runtime)
+        params = context.merge(category: :rails, variable: :runtime)
+
+        times.each do |time|
+          tracker.timing(params.merge(time))
+        end
       end
 
       private
@@ -38,6 +48,10 @@ module Staccato
 
       def tracker
         @tracker ||= payload['staccato.tracker']
+      end
+
+      def context
+        @context ||= payload['staccato.context']
       end
     end
   end
