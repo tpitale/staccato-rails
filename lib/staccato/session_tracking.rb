@@ -1,7 +1,13 @@
 module Staccato
   module SessionTracking
-    def tracker
-      @tracker ||= Staccato.tracker(staccato_tracker_id, staccato_client_id)
+    def self.included(controller)
+      controller.class_eval do
+        alias_method :tracker, :staccato_tracker unless defined?(tracker)
+      end
+    end
+
+    def staccato_tracker
+      @staccato_tracker ||= Staccato.tracker(staccato_tracker_id, staccato_client_id)
     end
 
     # pull tracker id from config
@@ -17,7 +23,7 @@ module Staccato
     def append_info_to_payload(payload)
       super
 
-      payload["staccato.tracker"] = tracker
+      payload["staccato.tracker"] = staccato_tracker
     end
   end
 end

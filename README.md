@@ -49,6 +49,8 @@ In controllers, `tracker` is made available to you:
 tracker.event(category: 'video', action: 'play', label: 'cars', value: 1)
 ```
 
+Note: if you have an existing method named `tracker`, this is also available with the more verbose `staccato_tracker`.
+
 ## Overriding the client_id ##
 
 A method is added to your controller called `staccato_client_id`. By default, it's implementation looks like:
