@@ -30,6 +30,8 @@ module Staccato
       end
 
       def track!
+        return if controller_disabled?
+
         params = context.merge(category: :rails, variable: :runtime)
 
         times.each do |time|
@@ -38,6 +40,7 @@ module Staccato
       end
 
       private
+
       def event
         @event ||= ActiveSupport::Notifications::Event.new(*@args)
       end
@@ -52,6 +55,16 @@ module Staccato
 
       def context
         @context ||= payload['staccato.context']
+      end
+
+      def controller
+        payload[:controller].safe_constantize
+      end
+
+      def controller_disabled?
+        !controller.nil? &&
+          controller.respond_to?(:staccato_timing_disabled?) &&
+          controller.staccato_timing_disabled?
       end
     end
   end

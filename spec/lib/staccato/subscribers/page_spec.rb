@@ -70,4 +70,26 @@ describe Staccato::Subscribers::Page do
     end
   end
 
+  context "with a disabled controller" do
+    let(:args) {
+      [
+        "process_action.action_controller", # name
+        now - duration, # starting
+        now, # ending
+        SecureRandom.uuid, # transaction_id
+        payload.merge(controller: "DisabledController")
+      ]
+    }
+
+    let(:page) {Staccato::Subscribers::Page.new(args)}
+
+    before(:each) do
+      tracker.stubs(:pageview)
+      page.track!
+    end
+
+    it 'tracks no pageviews to google analytics' do
+      expect(tracker).to have_received(:pageview).never
+    end
+  end
 end

@@ -85,6 +85,17 @@ config.staccato.pageviews = false
 config.staccato.exceptions = false # default
 ```
 
+## Disable tracking for a controller
+
+You can disable tracking of a specific controller by adding a class method.
+
+```ruby
+class SomeController
+  def self.staccato_page_disabled?; true; end
+  def self.staccato_timing_disabled?; true; end
+end
+```
+
 ## Adding Global and Hit context ##
 
 To add values like `user_ip` to all hits called by `tracker` (in both your own code, and staccato-rails) create a method `global_context` in your controller and return a hash:

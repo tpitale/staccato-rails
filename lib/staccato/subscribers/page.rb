@@ -22,11 +22,13 @@ module Staccato
       end
 
       def track!
+        return if controller_disabled?
         return unless get?
         tracker.pageview(context.merge(path: path, hostname: hostname))
       end
 
       private
+
       def event
         @event ||= ActiveSupport::Notifications::Event.new(*@args)
       end
@@ -45,6 +47,16 @@ module Staccato
 
       def path_prefix
         Rails.application.config.staccato.pageview_prefix.to_s
+      end
+
+      def controller
+        payload[:controller].safe_constantize
+      end
+
+      def controller_disabled?
+        !controller.nil? &&
+          controller.respond_to?(:staccato_page_disabled?) &&
+          controller.staccato_page_disabled?
       end
     end
   end
